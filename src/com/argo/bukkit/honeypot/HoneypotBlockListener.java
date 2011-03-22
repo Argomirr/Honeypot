@@ -20,7 +20,7 @@ public class HoneypotBlockListener extends BlockListener {
     public void onBlockRightClick(BlockRightClickEvent event) {
 	if(Honeyfarm.getPotSelect()) {
 	    Player player = event.getPlayer();
-	    if(player.isOp() && player.getItemInHand().getTypeId() == Settings.getToolId()) {
+	    if(HoneypotPermissionsHandler.canUseCmd(player) && player.getItemInHand().getTypeId() == Settings.getToolId()) {
 		if(!Honeyfarm.isPot(event.getBlock().getLocation())) {
 		    Honeyfarm.createPot(event.getBlock().getLocation());
 		    Honeyfarm.setPotSelect(false);
@@ -37,7 +37,7 @@ public class HoneypotBlockListener extends BlockListener {
     public void onBlockBreak(BlockBreakEvent event) {
 	if(Honeyfarm.isPot(event.getBlock().getLocation())) {
 	    Player player = event.getPlayer();
-	    if(!player.isOp()) {
+	    if(!HoneypotPermissionsHandler.canBreak(player)) {
 		if(Settings.getKickFlag()) 
 		    player.kickPlayer(Settings.getPotMsg());
 

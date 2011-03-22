@@ -20,6 +20,11 @@ public class Honeypot extends JavaPlugin {
 	if(!Honeyfarm.refreshData(getServer().getWorlds().get(0))) {
 	    System.out.println("Honeypot: an error occured while trying to load the honeypot list.");
 	}
+	if(!HoneypotPermissionsHandler.setupPermissions(this)) {
+	    System.out.println("Honeypot: Permissions plugin not found, using default.");
+	} else {
+	    System.out.println("Honeypot: Permissions plugin found, using that.");
+	}
 
 	PluginManager pm = getServer().getPluginManager();
 	pm.registerEvent(Type.BLOCK_RIGHTCLICKED, blockListener, Priority.Low, this);

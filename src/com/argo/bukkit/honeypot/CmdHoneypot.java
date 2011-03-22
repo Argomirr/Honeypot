@@ -18,8 +18,8 @@ public class CmdHoneypot implements CommandExecutor {
 	if(args.length == 0) {
 	    if(sender instanceof Player) {
 		Player player = (Player)sender;
-		if(!player.isOp()) {
-		    player.sendMessage(ChatColor.RED + "Only Op's can use this command.");
+		if(!HoneypotPermissionsHandler.canUseCmd(player)) {
+		    player.sendMessage(ChatColor.RED + "You are not allowed to use this command.");
 		} else {
 		    if(Honeyfarm.getPotSelect()) {
 			player.sendMessage(ChatColor.GREEN + "Honeypot creation cancelled.");
