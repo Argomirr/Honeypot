@@ -1,18 +1,18 @@
 
 package com.argo.bukkit.util;
 
-import com.argo.bukkit.honeypot.Honeypot;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class BasePermissionsHandler {
     private static PermissionHandler permissions;
 
-    public static boolean setupPermissions(Honeypot plugin) {
+    public static boolean setupPermissions(JavaPlugin plugin) {
         Plugin test = plugin.getServer().getPluginManager().getPlugin("Permissions");
         if (test != null) {
             permissions = ((Permissions)test).getHandler();

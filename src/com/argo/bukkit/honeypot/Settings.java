@@ -13,6 +13,7 @@ public class Settings {
     private static int toolID = 271;
     private static boolean doLog = true;
     private static boolean doKick = true;
+    private static boolean doBan = false;
 
     public static boolean load() {
 	PropertyHandler props = new PropertyHandler();
@@ -25,6 +26,7 @@ public class Settings {
 		props.setString("honeypotKickMsg", honeypotMsg);
 		props.setBoolean("logToFile", doLog);
 		props.setBoolean("kick", doKick);
+		props.setBoolean("ban", doBan);
 
 		props.store(new FileOutputStream(propertiesPath), null);
 	    } else {
@@ -33,6 +35,7 @@ public class Settings {
 		honeypotMsg = props.getString("honeypotKickMsg", honeypotMsg);
 		doLog = props.getBoolean("logToFile", doLog);
 		doKick = props.getBoolean("kick", doKick);
+		doBan = props.getBoolean("ban", doBan);
 	    }
 	} catch (Exception ex) {
 	    return false;
@@ -52,6 +55,10 @@ public class Settings {
 
     public static boolean getKickFlag() {
 	return doKick;
+    }
+
+    public static boolean getBanFlag() {
+	return doBan;
     }
 
     public static boolean getLogFlag() {

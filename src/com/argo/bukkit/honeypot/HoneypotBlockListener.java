@@ -1,6 +1,7 @@
 
 package com.argo.bukkit.honeypot;
 
+import com.argo.bukkit.util.BansHandler;
 import java.text.DateFormat;
 import java.util.Date;
 import org.bukkit.ChatColor;
@@ -38,8 +39,10 @@ public class HoneypotBlockListener extends BlockListener {
 	if(Honeyfarm.isPot(event.getBlock().getLocation())) {
 	    Player player = event.getPlayer();
 	    if(!HoneypotPermissionsHandler.canBreak(player)) {
-		if(Settings.getKickFlag()) 
-		    player.kickPlayer(Settings.getPotMsg());
+		if(Settings.getKickFlag())
+		    BansHandler.kick(player, "[Honeypot]", Settings.getPotMsg());
+		else if(Settings.getBanFlag())
+		    BansHandler.ban(player, "[Honeypot]", Settings.getPotMsg());
 
 		if(Settings.getLogFlag())
 		    Honeyfarm.log("[" + DateFormat.getTimeInstance().format(new Date()) + "] Player " + player.getName() + " was caught breaking a honeypot block.");
