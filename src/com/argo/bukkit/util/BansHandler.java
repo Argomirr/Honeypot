@@ -55,6 +55,7 @@ public class BansHandler {
     }
 
     private static void MCBan(Player player, String sender, String reason, String type) {
+	player.kickPlayer(reason); //kick for good measure
 	mcb.ban(player.getName(), sender, reason, type);
     }
 

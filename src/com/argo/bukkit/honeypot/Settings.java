@@ -14,6 +14,7 @@ public class Settings {
     private static boolean doLog = true;
     private static boolean doKick = true;
     private static boolean doBan = false;
+    private static boolean doShout = true;
 
     public static boolean load() {
 	PropertyHandler props = new PropertyHandler();
@@ -23,19 +24,21 @@ public class Settings {
 		new File(propertiesPath).createNewFile();
 
 		props.setInt("toolID", toolID);
-		props.setString("honeypotKickMsg", honeypotMsg);
-		props.setBoolean("logToFile", doLog);
+		props.setString("honeypot-kick-msg", honeypotMsg);
+		props.setBoolean("log-to-file", doLog);
 		props.setBoolean("kick", doKick);
 		props.setBoolean("ban", doBan);
+		props.setBoolean("notify-online-players", doShout);
 
 		props.store(new FileOutputStream(propertiesPath), null);
 	    } else {
 		props.load(new FileInputStream(propertiesPath));
 		toolID = props.getInt("toolID", toolID);
-		honeypotMsg = props.getString("honeypotKickMsg", honeypotMsg);
-		doLog = props.getBoolean("logToFile", doLog);
+		honeypotMsg = props.getString("honeypot-kick-msg", honeypotMsg);
+		doLog = props.getBoolean("log-to-file", doLog);
 		doKick = props.getBoolean("kick", doKick);
 		doBan = props.getBoolean("ban", doBan);
+		doShout = props.getBoolean("notify-online-players", doShout);
 	    }
 	} catch (Exception ex) {
 	    return false;
@@ -63,5 +66,9 @@ public class Settings {
 
     public static boolean getLogFlag() {
 	return doLog;
+    }
+
+    public static boolean getShoutFlag() {
+	return doShout;
     }
 }

@@ -1,6 +1,6 @@
 name: Honeypot
 main: com.argo.bukkit.honeypot.Honeypot
-version: 2
+version: 3
 author: Argomirr
 commands:
  honeypot:

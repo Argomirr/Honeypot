@@ -39,6 +39,8 @@ public class HoneypotBlockListener extends BlockListener {
 	if(Honeyfarm.isPot(event.getBlock().getLocation())) {
 	    Player player = event.getPlayer();
 	    if(!HoneypotPermissionsHandler.canBreak(player)) {
+		event.setCancelled(true);
+		
 		if(Settings.getKickFlag())
 		    BansHandler.kick(player, "[Honeypot]", Settings.getPotMsg());
 		else if(Settings.getBanFlag())
@@ -48,8 +50,8 @@ public class HoneypotBlockListener extends BlockListener {
 		    Honeyfarm.log("[" + DateFormat.getTimeInstance().format(new Date()) + "] Player " + player.getName() + " was caught breaking a honeypot block.");
 
 		System.out.println("[Honeypot] Player " + player.getName() + " was caught breaking a honeypot block.");
-		plugin.getServer().broadcastMessage(ChatColor.DARK_RED + "[Honeypot]" + ChatColor.GRAY + " Player " + ChatColor.DARK_RED + player.getName() + ChatColor.GRAY + " was caught breaking a honeypot block.");
-		event.setCancelled(true);
+		if(Settings.getShoutFlag())
+		    plugin.getServer().broadcastMessage(ChatColor.DARK_RED + "[Honeypot]" + ChatColor.GRAY + " Player " + ChatColor.DARK_RED + player.getName() + ChatColor.GRAY + " was caught breaking a honeypot block.");
 	    } else {
 		player.sendMessage(ChatColor.GREEN + "Honeypot removed.");
 		Honeyfarm.removePot(event.getBlock().getLocation());
