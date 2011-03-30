@@ -8,30 +8,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
-import org.bukkit.event.block.BlockRightClickEvent;
 
 public class HoneypotBlockListener extends BlockListener {
     private static Honeypot plugin;
 
     public HoneypotBlockListener(Honeypot instance) {
 	plugin = instance;
-    }
-
-    @Override
-    public void onBlockRightClick(BlockRightClickEvent event) {
-	if(Honeyfarm.getPotSelect()) {
-	    Player player = event.getPlayer();
-	    if(HoneypotPermissionsHandler.canUseCmd(player) && player.getItemInHand().getTypeId() == Settings.getToolId()) {
-		if(!Honeyfarm.isPot(event.getBlock().getLocation())) {
-		    Honeyfarm.createPot(event.getBlock().getLocation());
-		    Honeyfarm.setPotSelect(false);
-		    player.sendMessage(ChatColor.GREEN + "Honeypot created. Destroy the block to remove the honeypot.");
-		} else {
-		    player.sendMessage(ChatColor.DARK_RED + "That block is already marked as a honeypot. Honeypot creation cancelled.");
-		    Honeyfarm.setPotSelect(false);
-		}
-	    }
-	}
     }
 
     @Override

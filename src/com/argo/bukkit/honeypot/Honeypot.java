@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Honeypot extends JavaPlugin {
     private final HoneypotBlockListener blockListener = new HoneypotBlockListener(this);
+    private final HoneypotPlayerListener playerListener = new HoneypotPlayerListener(this);
 
     public void onEnable() {
 	createDirs();
@@ -43,7 +44,7 @@ public class Honeypot extends JavaPlugin {
 	}
 
 	PluginManager pm = getServer().getPluginManager();
-	pm.registerEvent(Type.BLOCK_RIGHTCLICKED, blockListener, Priority.Low, this);
+	pm.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Low, this);
 	pm.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Highest, this);
 	getCommand("honeypot").setExecutor(new CmdHoneypot(this));
 
