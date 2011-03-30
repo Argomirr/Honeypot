@@ -1,6 +1,7 @@
 
 package com.argo.bukkit.honeypot;
 
+import org.bukkit.event.block.Action;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -15,7 +16,7 @@ public class HoneypotPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-	if(Honeyfarm.getPotSelect()) {
+	if(Honeyfarm.getPotSelect() && event.getAction() == Action.RIGHT_CLICK_BLOCK){
 	    Player player = event.getPlayer();
 	    if(HoneypotPermissionsHandler.canUseCmd(player) && player.getItemInHand().getTypeId() == Settings.getToolId()) {
 		if(!Honeyfarm.isPot(event.getClickedBlock().getLocation())) {
