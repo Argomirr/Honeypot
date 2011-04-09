@@ -16,16 +16,15 @@ public class HoneypotPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-	if(Honeyfarm.getPotSelect() && event.getAction() == Action.RIGHT_CLICK_BLOCK){
-	    Player player = event.getPlayer();
+	Player player = event.getPlayer();
+	if(Honeyfarm.getPotSelect(player) && event.getAction() == Action.RIGHT_CLICK_BLOCK){
 	    if(HoneypotPermissionsHandler.canUseCmd(player) && player.getItemInHand().getTypeId() == Settings.getToolId()) {
 		if(!Honeyfarm.isPot(event.getClickedBlock().getLocation())) {
 		    Honeyfarm.createPot(event.getClickedBlock().getLocation());
-		    Honeyfarm.setPotSelect(false);
 		    player.sendMessage(ChatColor.GREEN + "Honeypot created. Destroy the block to remove the honeypot.");
 		} else {
 		    player.sendMessage(ChatColor.DARK_RED + "That block is already marked as a honeypot. Honeypot creation cancelled.");
-		    Honeyfarm.setPotSelect(false);
+		    Honeyfarm.setPotSelect(player, false);
 		}
 	    }
 	}

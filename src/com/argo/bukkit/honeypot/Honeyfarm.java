@@ -4,17 +4,20 @@ package com.argo.bukkit.honeypot;
 import com.argo.util.TextFileHandler;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 public class Honeyfarm {
     private static final String potListPath = "plugins/Honeypot/list.ncsv";
     private static final String logPath = "plugins/Honeypot/honeypot.log";
 
     private static List<Location> pots = new ArrayList<Location>();
-    private static boolean potSelect = false;
+    private static List<String> potSelectUsers = new ArrayList<String>();
 
     public static boolean refreshData(World w) {
 	TextFileHandler r = new TextFileHandler(potListPath);
@@ -58,7 +61,7 @@ public class Honeyfarm {
     public static void log(String line) {
 	TextFileHandler r = new TextFileHandler(logPath);
 	try {
-	    r.appendLine(line);
+	    r.appendLine("[" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "] " + line);
 	} catch (IOException ex) {}
     }
 
@@ -80,11 +83,18 @@ public class Honeyfarm {
        pots.remove(loc);
     }
 
-    public static void setPotSelect(boolean state) {
-	potSelect = state;
+    public static void setPotSelect(Player player, boolean state) {
+	if(state) {
+	    potSelectUsers.add(player.getName());
+	} else {
+	    potSelectUsers.remove(player.getName());
+	}
     }
 
-    public static boolean getPotSelect() {
-	return potSelect;
+    public static boolean getPotSelect(Player player) {
+	if(potSelectUsers.contains(player.getName()))
+	    return true;
+	else
+	    return false;
     }
 }

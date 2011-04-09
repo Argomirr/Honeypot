@@ -23,7 +23,7 @@ public class Settings {
 	    if(!new File(propertiesPath).exists()) {
 		new File(propertiesPath).createNewFile();
 
-		props.setInt("toolID", toolID);
+		props.setInt("tool-id", toolID);
 		props.setString("honeypot-kick-msg", honeypotMsg);
 		props.setBoolean("log-to-file", doLog);
 		props.setBoolean("kick", doKick);
@@ -33,7 +33,7 @@ public class Settings {
 		props.store(new FileOutputStream(propertiesPath), null);
 	    } else {
 		props.load(new FileInputStream(propertiesPath));
-		toolID = props.getInt("toolID", toolID);
+		toolID = props.getInt("tool-id", toolID);
 		honeypotMsg = props.getString("honeypot-kick-msg", honeypotMsg);
 		doLog = props.getBoolean("log-to-file", doLog);
 		doKick = props.getBoolean("kick", doKick);

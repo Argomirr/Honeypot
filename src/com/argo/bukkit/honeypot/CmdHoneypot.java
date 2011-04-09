@@ -21,12 +21,12 @@ public class CmdHoneypot implements CommandExecutor {
 		if(!HoneypotPermissionsHandler.canUseCmd(player)) {
 		    player.sendMessage(ChatColor.RED + "You are not allowed to use this command.");
 		} else {
-		    if(Honeyfarm.getPotSelect()) {
+		    if(Honeyfarm.getPotSelect(player)) {
 			player.sendMessage(ChatColor.GREEN + "Honeypot creation cancelled.");
-			Honeyfarm.setPotSelect(false);
+			Honeyfarm.setPotSelect(player, false);
 		    } else {
-			player.sendMessage(ChatColor.GREEN + "Right click a block with a " + Settings.getToolId() + " to create a honeypot.");
-			Honeyfarm.setPotSelect(true);
+			player.sendMessage(ChatColor.GREEN + "Right click a block with a " + Settings.getToolId() + " to create a honeypot. When finished, use /hp again.");
+			Honeyfarm.setPotSelect(player, true);
 		    }
 		}
 	    } else {

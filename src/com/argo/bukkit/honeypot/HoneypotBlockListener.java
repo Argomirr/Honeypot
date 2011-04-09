@@ -5,6 +5,7 @@ import com.argo.bukkit.util.BansHandler;
 import java.text.DateFormat;
 import java.util.Date;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
@@ -18,7 +19,8 @@ public class HoneypotBlockListener extends BlockListener {
 
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
-	if(Honeyfarm.isPot(event.getBlock().getLocation())) {
+	Block block = event.getBlock();
+	if(Honeyfarm.isPot(block.getLocation())) {
 	    Player player = event.getPlayer();
 	    if(!HoneypotPermissionsHandler.canBreak(player)) {
 		event.setCancelled(true);
@@ -28,8 +30,10 @@ public class HoneypotBlockListener extends BlockListener {
 		else if(Settings.getBanFlag())
 		    BansHandler.ban(player, "[Honeypot]", Settings.getPotMsg());
 
-		if(Settings.getLogFlag())
-		    Honeyfarm.log("[" + DateFormat.getTimeInstance().format(new Date()) + "] Player " + player.getName() + " was caught breaking a honeypot block.");
+		if(Settings.getLogFlag()) {
+		    String loc = block.getLocation().getBlockX() + ", " +  block.getLocation().getBlockY() + ", " +  block.getLocation().getBlockZ();
+		    Honeyfarm.log("Player " + player.getName() + " was caught breaking a honeypot block at location " + loc + ".");
+		}
 
 		System.out.println("[Honeypot] Player " + player.getName() + " was caught breaking a honeypot block.");
 		if(Settings.getShoutFlag())
