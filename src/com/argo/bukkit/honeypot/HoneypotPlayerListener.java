@@ -23,8 +23,7 @@ public class HoneypotPlayerListener extends PlayerListener {
 		    Honeyfarm.createPot(event.getClickedBlock().getLocation());
 		    player.sendMessage(ChatColor.GREEN + "Honeypot created. Destroy the block to remove the honeypot.");
 		} else {
-		    player.sendMessage(ChatColor.DARK_RED + "That block is already marked as a honeypot. Honeypot creation cancelled.");
-		    Honeyfarm.setPotSelect(player, false);
+		    player.sendMessage(ChatColor.DARK_RED + "That block is already marked as a honeypot.");
 		}
 	    }
 	}

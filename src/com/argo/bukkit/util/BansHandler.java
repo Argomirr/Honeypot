@@ -12,7 +12,10 @@ public class BansHandler {
     private static BansMethod bmethod = BansMethod.NONE;
 
     public static BansMethod setupbanHandler(JavaPlugin plugin) {
-        Plugin test = plugin.getServer().getPluginManager().getPlugin("MCBans");
+        Plugin test = plugin.getServer().getPluginManager().getPlugin("mcbans");
+	if(test == null) //Compatibility for older MCBans releases
+	    test = plugin.getServer().getPluginManager().getPlugin("MCBans");
+
         if (test != null) {
             mcb = ((mcbans) test).mcb_handler;
 	    bmethod = BansMethod.MCBANS;
