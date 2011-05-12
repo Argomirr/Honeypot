@@ -19,7 +19,8 @@ public class Honeyfarm {
 	private static List<String> potSelectUsers = new ArrayList<String>();
 
 	public static boolean refreshData(Honeypot plugin) {
-
+		World potWorld;
+		
 		TextFileHandler r = new TextFileHandler(potListPath);
 		pots.clear();
 		try {
@@ -29,13 +30,17 @@ public class Honeyfarm {
 				coord = list.remove(0).split(",");
 				if(coord.length == 4) {
 					String world = coord[0];
-					World potWorld;
 					if (plugin.getServer().getWorld(world) == null)
 						potWorld = plugin.getServer().getWorlds().get(0);
 					else
 						potWorld = plugin.getServer().getWorld(world);
 
 					pots.add(new Location(potWorld, new Double(coord[1]), new Double(coord[2]), new Double(coord[3])));
+				} else {
+					// Earlier than version 7 - No world set, have to assume primary world. 
+					String potWorldname = plugin.getServer().getWorlds().get(0).getName();
+					potWorld = plugin.getServer().getWorld(potWorldname);
+					pots.add(new Location(potWorld, new Double(coord[0]), new Double(coord[1]), new Double(coord[2])));
 				}
 			}
 
@@ -55,7 +60,7 @@ public class Honeyfarm {
 		Location loc;
 		while(!pots.isEmpty()) {
 			loc = pots.remove(0);
-			tmp.add(loc.getWorld() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ());
+			tmp.add(loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ());
 		}
 		try {
 			r.writeLines(tmp);
